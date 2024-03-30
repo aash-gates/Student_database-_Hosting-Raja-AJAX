@@ -52,7 +52,7 @@ To run this application locally, you need the following:
 ## File Structure
 
          ajax-student-details/
-                 │
+            │
             ├── css/
             │ └── styles.css
             │
