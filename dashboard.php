@@ -226,6 +226,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     // Hide loading spinner
                     $('#loading-spinner').hide();
                     $('#student-table-body').html(response);
+                }
         // Initial call to fetch time and quote information
         getTime();
         getQuote();
