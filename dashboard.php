@@ -199,7 +199,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         function getTime() {
             $.ajax({
                 url: 'get_time.php',
-                success: function (response) {
                     $('#time-info').text('Current Time: ' + response);
                 }
             });
