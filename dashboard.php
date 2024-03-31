@@ -209,7 +209,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         function getQuote() {
             $.ajax({
                 url: 'get_quote.php',
-                success: function (response) {
                     $('#quote-info').text(response);
                 }
             });
