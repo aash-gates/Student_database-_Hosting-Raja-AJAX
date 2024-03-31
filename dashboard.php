@@ -239,6 +239,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
         // Update quote every 30 seconds
         setInterval(getQuote, 30000);
+
     </script>
 </body>
 
