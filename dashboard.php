@@ -180,6 +180,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                                 }
                                 ?>
                             </ul>
+                            <!-- Loading spinner -->
                         </nav>
                         <a href="add_student.php" class="btn btn-primary">Add Student</a>
                     </div>
