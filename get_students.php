@@ -9,3 +9,4 @@ $results_per_page = 10;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $start_index = ($page - 1) * $results_per_page;
 
+// Retrieve students for the current page
