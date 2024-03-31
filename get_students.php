@@ -10,3 +10,4 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $start_index = ($page - 1) * $results_per_page;
 
 // Retrieve students for the current page
+$sql_page = "SELECT full_name, student_id FROM StudentRecords LIMIT $start_index, $results_per_page";
