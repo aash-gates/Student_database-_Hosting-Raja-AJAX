@@ -1,59 +1,3 @@
-<?php
-
-// Start session management
-session_start();
-
-// Check if the user is logged in
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    // If not logged in, redirect to the login page
-    header("Location: index.php");
-    exit(); // Stop further execution
-}
-
-// Continue with your existing code for editing student details
-
-// Include your db_connect.php file to establish a database connection
-include 'db_connect.php';
-
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate form inputs
-    $full_name = $_POST['full_name'];
-    $phone_number = $_POST['country_code'] . $_POST['phone_number'];
-    $dob = $_POST['dob'];
-    $mother_tongue = $_POST['mother_tongue'];
-    $blood_group = $_POST['blood_group'];
-    $known_dust_allergies = $_POST['known_dust_allergies'];
-    $mother_name = $_POST['mother_name'];
-    $father_name = $_POST['father_name'];
-    $nationality = $_POST['nationality'];
-
-    // Insert the student details into the database
-    $sql_insert = "INSERT INTO StudentRecords (full_name, phone_number, dob, mother_tongue, blood_group, known_dust_allergies, mother_name, father_name, nationality) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    
-    // Prepare and bind the statement
-    $stmt = $connection->prepare($sql_insert);
-    $stmt->bind_param("sssssssss", $full_name, $phone_number, $dob, $mother_tongue, $blood_group, $known_dust_allergies, $mother_name, $father_name, $nationality);
-    
-    // Execute the statement
-    if ($stmt->execute() === TRUE) {
-        // If insertion is successful, send success response
-        echo json_encode(["success" => true]);
-        exit();
-    } else {
-        // If there's an error, send error response
-        echo json_encode(["success" => false, "error" => $connection->error]);
-        exit();
-    }
-
-    // Close statement
-    $stmt->close();
-}
-
-// Close database connection
-$connection->close();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,42 +12,84 @@ $connection->close();
     <style>
         /* Custom CSS styles here */
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #FF416C, #FF4B2B);
-            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            animation: changeBackground 10s linear infinite;
+        }
+
+        @keyframes changeBackground {
+            0% {
+                background-color: rgb(255, 0, 0); /* Red */
+            }
+
+            25% {
+                background-color: rgb(0, 255, 0); /* Green */
+            }
+
+            50% {
+                background-color: rgb(0, 0, 255); /* Blue */
+            }
+
+            75% {
+                background-color: rgb(255, 255, 0); /* Yellow */
+            }
+
+            100% {
+                background-color: rgb(255, 0, 255); /* Magenta */
+            }
         }
 
         .container {
-            margin-top: 50px;
+            margin-top: 20px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .logout-btn {
+            margin-bottom: 20px;
         }
 
         .card {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: 0.3s;
+            color: #333;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
         }
 
         .card-header {
-            background-color: rgba(255, 255, 255, 0.5);
-            color: #333;
+            background-color: #007bff;
+            color: #fff;
             font-weight: bold;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
         }
 
         .card-body {
             padding: 20px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            font-weight: bold;
+        .quote {
+            font-size: 18px;
         }
 
         .btn-save, .btn-back {
-            background-color: #fff;
-            color: #333;
+            background-color: #007bff;
+            color: #fff;
             border: none;
             border-radius: 20px;
             padding: 10px 20px;
@@ -112,11 +98,31 @@ $connection->close();
         }
 
         .btn-save:hover, .btn-back:hover {
-            background-color: #eee;
+            background-color: #0056b3;
         }
 
         .alert {
             margin-top: 20px;
+        }
+
+        /* Loading spinner styles */
+        .spinner {
+            border: 5px solid #f3f3f3; /* Light grey */
+            border-top: 5px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: none; /* Initially hidden */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -127,7 +133,7 @@ $connection->close();
                 <h2>Add Student</h2>
             </div>
             <div class="card-body">
-                <form id="addStudentForm" method="POST">
+                <form id="addStudentForm">
                     <div class="form-group">
                         <label for="full_name">Full Name:</label>
                         <input type="text" class="form-control" id="full_name" name="full_name" required>
@@ -180,7 +186,7 @@ $connection->close();
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="known_dust_allergies">Known Allergies:</label>
+                        <label for="known_dust_allergies">Known Dust Allergies:</label>
                         <select class="form-control" id="known_dust_allergies" name="known_dust_allergies" required>
                             <option value="">Select Allergy</option>
                             <?php
@@ -228,6 +234,9 @@ $connection->close();
         </div>
     </div>
 
+    <!-- Loading spinner -->
+    <div id="loading-spinner" class="spinner"></div>
+
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
@@ -235,6 +244,9 @@ $connection->close();
             // Intercept form submission
             $('#addStudentForm').submit(function (e) {
                 e.preventDefault(); // Prevent default form submission
+                
+                // Show loading spinner
+                $('#loading-spinner').show();
                 
                 // Serialize form data
                 var formData = $(this).serialize();
@@ -246,6 +258,9 @@ $connection->close();
                     data: formData,
                     dataType: 'json',
                     success: function (response) {
+                        // Hide loading spinner after AJAX request completes
+                        $('#loading-spinner').hide();
+
                         // Check if insertion was successful
                         if (response.success) {
                             alert('Student added successfully!');
@@ -256,6 +271,8 @@ $connection->close();
                         }
                     },
                     error: function () {
+                        // Hide loading spinner after AJAX request completes
+                        $('#loading-spinner').hide();
                         alert('An error occurred while processing the request.');
                     }
                 });
