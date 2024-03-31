@@ -219,6 +219,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         function getStudents(page) {
             // Show loading spinner
             $('#loading-spinner').show();
+
         // Initial call to fetch time and quote information
         getTime();
         getQuote();
