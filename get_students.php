@@ -6,3 +6,4 @@ include 'db_connect.php';
 $results_per_page = 10;
 
 // Get current page from URL query string
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
