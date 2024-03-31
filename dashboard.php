@@ -181,6 +181,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                                 ?>
                             </ul>
                             <!-- Loading spinner -->
+                            <div id="loading-spinner" class="spinner-border text-primary" role="status" style="display: none;">
                         </nav>
                         <a href="add_student.php" class="btn btn-primary">Add Student</a>
                     </div>
