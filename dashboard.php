@@ -242,6 +242,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
         // Attach click event to pagination links
         $('.pagination a').on('click', function(e) {
+            e.preventDefault();
     </script>
 </body>
 
