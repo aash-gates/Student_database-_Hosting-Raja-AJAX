@@ -241,6 +241,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         setInterval(getQuote, 30000);
 
         // Attach click event to pagination links
+        $(document).on('click', '.pagination a', function(e) {
             e.preventDefault();
             var page = $(this).attr('href').split('page=')[1];
             getStudents(page);
