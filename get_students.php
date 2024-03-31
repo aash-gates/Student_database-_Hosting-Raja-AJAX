@@ -13,3 +13,4 @@ $start_index = ($page - 1) * $results_per_page;
 $sql_page = "SELECT full_name, student_id FROM StudentRecords LIMIT $start_index, $results_per_page";
 $result_page = $connection->query($sql_page);
 
+if ($result_page->num_rows > 0) {
