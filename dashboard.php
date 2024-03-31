@@ -228,6 +228,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     $('#student-table-body').html(response);
                 }
             });
+        }
         // Initial call to fetch time and quote information
         getTime();
         getQuote();
