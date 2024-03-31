@@ -183,6 +183,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                             <!-- Loading spinner -->
                             <div id="loading-spinner" class="spinner-border text-primary" role="status" style="display: none;">
                                 <span class="sr-only">Loading...</span>
+                            </div>
                         </nav>
                         <a href="add_student.php" class="btn btn-primary">Add Student</a>
                     </div>
