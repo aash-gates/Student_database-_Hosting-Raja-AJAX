@@ -18,3 +18,4 @@ if ($result_page->num_rows > 0) {
         echo "<tr>";
         echo "<td><a href='student_details.php?id=" . $row['student_id'] . "'>" . $row['full_name'] . "</a></td>";
         echo "<td>" . $row['student_id'] . "</td>";
+        echo "</tr>";
