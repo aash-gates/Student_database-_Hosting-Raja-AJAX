@@ -229,6 +229,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 }
             });
         }
+
         // Initial call to fetch time and quote information
         getTime();
         getQuote();
