@@ -224,6 +224,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 url: 'get_students.php?page=' + page,
                 success: function(response) {
                     // Hide loading spinner
+                    $('#loading-spinner').hide();
         // Initial call to fetch time and quote information
         getTime();
         getQuote();
