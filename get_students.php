@@ -21,3 +21,4 @@ if ($result_page->num_rows > 0) {
         echo "</tr>";
     }
 } else {
+    echo "<tr><td colspan='2'>No students found.</td></tr>";
