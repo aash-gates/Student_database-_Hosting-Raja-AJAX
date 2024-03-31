@@ -4,3 +4,4 @@ include 'db_connect.php';
 
 // Pagination variables
 $results_per_page = 10;
+
