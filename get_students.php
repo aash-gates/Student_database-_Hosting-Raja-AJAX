@@ -5,3 +5,4 @@ include 'db_connect.php';
 // Pagination variables
 $results_per_page = 10;
 
+// Get current page from URL query string
