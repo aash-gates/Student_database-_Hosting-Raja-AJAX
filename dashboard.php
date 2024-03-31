@@ -221,6 +221,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             $('#loading-spinner').show();
 
             $.ajax({
+                url: 'get_students.php?page=' + page,
         // Initial call to fetch time and quote information
         getTime();
         getQuote();
