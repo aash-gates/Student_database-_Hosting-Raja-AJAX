@@ -14,3 +14,4 @@ $sql_page = "SELECT full_name, student_id FROM StudentRecords LIMIT $start_index
 $result_page = $connection->query($sql_page);
 
 if ($result_page->num_rows > 0) {
+    while ($row = $result_page->fetch_assoc()) {
