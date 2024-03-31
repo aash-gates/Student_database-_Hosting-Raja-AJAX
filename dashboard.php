@@ -137,7 +137,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                                         <th>Student ID</th>
                                     </tr>
                                 </thead>
-                                <tbody>
                                     <?php
                                     // Include db_connect.php to establish a database connection
                                     include 'db_connect.php';
