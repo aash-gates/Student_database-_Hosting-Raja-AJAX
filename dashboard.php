@@ -220,6 +220,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             // Show loading spinner
             $('#loading-spinner').show();
 
+            $.ajax({
         // Initial call to fetch time and quote information
         getTime();
         getQuote();
