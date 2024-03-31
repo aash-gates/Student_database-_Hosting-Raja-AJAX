@@ -20,3 +20,4 @@ if ($result_page->num_rows > 0) {
         echo "<td>" . $row['student_id'] . "</td>";
         echo "</tr>";
     }
+} else {
