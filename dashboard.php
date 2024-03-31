@@ -222,6 +222,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
             $.ajax({
                 url: 'get_students.php?page=' + page,
+                success: function(response) {
         // Initial call to fetch time and quote information
         getTime();
         getQuote();
