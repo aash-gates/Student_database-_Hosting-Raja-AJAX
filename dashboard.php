@@ -217,6 +217,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
         // Function to fetch paginated student records
         function getStudents(page) {
+            // Show loading spinner
         // Initial call to fetch time and quote information
         getTime();
         getQuote();
