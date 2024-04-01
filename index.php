@@ -86,7 +86,7 @@
     <div class="container">
         <div class="form-container">
             <h3>Login</h3>
-            <form id="loginForm">
+            <form id="loginForm" action="process_login.php" method="post">
                 <input type="text" id="username" name="username" placeholder="Username" class="form-control" required>
                 <input type="password" id="password" name="password" placeholder="Password" class="form-control" required>
                 <button type="submit" class="btn-color">Login</button>
@@ -96,41 +96,34 @@
     </div>
 
     <script>
-        // Function to handle form submission using AJAX
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission
 
             var form = this;
             var formData = new FormData(form);
 
-            // Create a new XMLHttpRequest object
             var xhr = new XMLHttpRequest();
+            xhr.open('POST', form.action, true);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
-            // Configure the request
-            xhr.open('POST', 'process_login.php', true);
-
-            // Set up the onload function to handle the response
             xhr.onload = function() {
                 if (xhr.status >= 200 && xhr.status < 400) {
                     var response = xhr.responseText;
 
-                    // Check the response from the server
-                    if (response === 'success') {
-                        window.location.href = 'dashboard.php'; // Redirect to dashboard upon successful login
+                    if (response.trim() === 'success') {
+                        window.location.href = 'dashboard.php';
                     } else {
-                        document.getElementById('error-message').textContent = response; // Display error message
+                        document.getElementById('error-message').textContent = response;
                     }
                 } else {
-                    console.error('Error: ' + xhr.status + ' - ' + xhr.statusText); // Log error message
+                    console.error('Error: ' + xhr.status + ' - ' + xhr.statusText);
                 }
             };
 
-            // Set up the onerror function to handle errors
             xhr.onerror = function() {
-                console.error('Request failed'); // Log error message
+                console.error('Request failed');
             };
 
-            // Send the request with form data
             xhr.send(formData);
         });
     </script>
