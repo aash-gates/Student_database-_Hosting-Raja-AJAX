@@ -140,6 +140,10 @@
                 $.ajax({
                     url: 'delete_student.php?id=' + studentId,
                     type: 'GET',
+                    beforeSend: function() {
+                        // Show loading spinner before sending the request
+                        $('.student-details').prepend('<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>');
+                    },
                     success: function(response) {
                         // Redirect to the dashboard after successful deletion
                         window.location.href = 'dashboard.php';
@@ -147,6 +151,10 @@
                     error: function(xhr, status, error) {
                         // Display an error message if deletion fails
                         alert('Error deleting student record. Please try again.');
+                    },
+                    complete: function() {
+                        // Remove loading spinner after request completion
+                        $('.spinner-border').remove();
                     }
                 });
             }
