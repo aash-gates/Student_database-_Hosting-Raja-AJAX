@@ -93,6 +93,19 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         .quote {
             font-size: 18px;
         }
+
+        /* Custom CSS for pagination */
+        .pagination .page-item.active .page-link {
+            background-color: #007bff; /* Change to the desired color */
+            border-color: #007bff; /* Change to the desired color */
+            color: #fff; /* Change to the desired color */
+        }
+
+        .pagination .page-item.active .page-link:hover {
+            background-color: #0056b3; /* Change to the desired color */
+            border-color: #0056b3; /* Change to the desired color */
+            color: #fff; /* Change to the desired color */
+        }
     </style>
 </head>
 
@@ -124,6 +137,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -195,58 +209,75 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <!-- JavaScript for AJAX -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
-        // Function to fetch time information via AJAX
-        function getTime() {
-            $.ajax({
-                url: 'get_time.php',
-                success: function(response) {
-                    $('#time-info').text('Current Time: ' + response);
-                }
-            });
-        }
-
-        // Function to fetch quote information via AJAX
-        function getQuote() {
-            $.ajax({
-                url: 'get_quote.php',
-                success: function(response) {
-                    $('#quote-info').text(response);
-                }
-            });
-        }
-
-        // Function to fetch paginated student records
-        function getStudents(page) {
-            // Show loading spinner
-            $('#loading-spinner').show();
-
-            $.ajax({
-                url: 'get_students.php?page=' + page,
-                success: function(response) {
-                    // Hide loading spinner
-                    $('#loading-spinner').hide();
-                    $('#student-table-body').html(response);
-                }
-            });
-        }
-
-        // Initial call to fetch time and quote information
-        getTime();
-        getQuote();
-
-        // Update time every second
-        setInterval(getTime, 1000);
-
-        // Update quote every 30 seconds
-        setInterval(getQuote, 30000);
-
-        // Attach click event to pagination links
-        $(document).on('click', '.pagination a', function(e) {
-            e.preventDefault();
-            var page = $(this).attr('href').split('page=')[1];
-            getStudents(page);
+    // Function to fetch time information via AJAX
+    function getTime() {
+        $.ajax({
+            url: 'get_time.php',
+            success: function(response) {
+                $('#time-info').text('Current Time: ' + response);
+            }
         });
-    </script>
+    }
+
+    // Function to fetch quote information via AJAX
+    function getQuote() {
+        $.ajax({
+            url: 'get_quote.php',
+            success: function(response) {
+                $('#quote-info').text(response);
+            }
+        });
+    }
+
+    // Function to fetch paginated student records
+    function getStudents(page) {
+        // Show loading spinner
+        $('#loading-spinner').show();
+
+        $.ajax({
+            url: 'get_students.php?page=' + page,
+            success: function(response) {
+                // Hide loading spinner
+                $('#loading-spinner').hide();
+                $('#student-table-body').html(response);
+            }
+        });
+    }
+
+    // Initial call to fetch time and quote information
+    getTime();
+    getQuote();
+
+    // Update time every second
+    setInterval(getTime, 1000);
+
+    // Update quote every 30 seconds
+    setInterval(getQuote, 30000);
+
+    // Attach click event to pagination links
+    $(document).on('click', '.pagination a', function(e) {
+        e.preventDefault();
+        var page = $(this).attr('href').split('page=')[1];
+        getStudents(page);
+        // Remove 'active' class from all pagination links
+        $('.pagination li').removeClass('active');
+        // Add 'active' class to the clicked pagination link
+        $(this).parent().addClass('active');
+    });
+
+    // Highlight active page on page load
+    $(document).ready(function() {
+        var currentPage = <?php echo isset($_GET['page']) ? $_GET['page'] : 1; ?>;
+        $(".pagination li").removeClass('active');
+        $(".pagination li a").each(function() {
+            var href = $(this).attr('href');
+            if (href.indexOf('page=' + currentPage) !== -1) {
+                $(this).parent().addClass('active');
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>
