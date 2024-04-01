@@ -29,7 +29,7 @@ To run this application locally, you need the following:
 
 1. Clone this repository to your local machine:
 
-       git clone https://github.com/your-username/ajax-student-details.git
+       git clone https://github.com/aash-gates/Student_database-_Hosting-Raja-AJAX.git
 
 2. Configure your web server to serve the application from the cloned directory (`ajax-student-details`).
 
